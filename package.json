@@ -14,7 +14,8 @@
     "query-solo": "vorne-query refresh"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.6.8",
+    "follow-redirects": "^1.15.6",
     "fs": "^0.0.1-security",
     "js-yaml": "^4.1.0",
     "minimatch": "^9.0.3",
