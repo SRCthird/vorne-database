@@ -1,4 +1,4 @@
-const mysql = require('mysql2/promise');
+const mysql = require('mysql');
 const { readFileSync } = require('fs');
 const { load } = require('js-yaml');
 const { getPassword } = require('../modules/getPassword.js')
@@ -13,14 +13,14 @@ const connectionConfig = {
 
 async function createDatabases(databaseList) {
     for (let database of databaseList) {
-        const connection = await mysql.createConnection(connectionConfig);
+        const connection = mysql.createConnection(connectionConfig);
         try {
-            await connection.query(`CREATE DATABASE IF NOT EXISTS ${database}`);
+            connection.query(`CREATE DATABASE IF NOT EXISTS ${database}`);
             console.log(`${database} created or already exists.`);
         } catch (err) {
             console.error(`Error creating database ${database}:`, err);
         } finally {
-            await connection.end();
+            connection.end();
         }
     }
 }

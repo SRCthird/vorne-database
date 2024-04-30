@@ -1,4 +1,4 @@
-const mysql = require('mysql2/promise');
+const mysql = require('mysql');
 const { readFileSync } = require('fs');
 const { load } = require('js-yaml');
 const { getPassword } = require('../modules/getPassword.js')
@@ -29,7 +29,7 @@ function getColumnDefinition(columnType) {
 }
 
 async function createTablesForDatabase(databaseName, tablesData) {
-    const connection = await mysql.createConnection({
+    const connection = mysql.createConnection({
         ...connectionConfig,
         database: databaseName
     });
@@ -48,14 +48,14 @@ async function createTablesForDatabase(databaseName, tablesData) {
         const createTableSQL = `CREATE TABLE IF NOT EXISTS ${tableName} (${columnDefinitions.join(', ')})`;
         
         try {
-            await connection.query(createTableSQL);
+            connection.query(createTableSQL);
             console.log(`Table ${tableName} created or already exists in ${databaseName}.`);
         } catch (err) {
             console.error(`Error creating table ${tableName} in ${databaseName}:`, err);
         }
     }
 
-    await connection.end();
+    connection.end();
 }
 
 async function main() {
